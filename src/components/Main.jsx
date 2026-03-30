@@ -7,10 +7,6 @@ export default function Main(){
     const [ingredients, setIngredients] = React.useState([])
     const [recipeShow, setRecipeShow] = React.useState(false)
 
-    const ingredientsListItems = ingredients.map(ingredient => (
-        <li key={ingredient}>{ingredient}</li>
-    ))
-
     function addIngredients(formData){
         const newIngredient = formData.get("ingredient")
         setIngredients(prevIngredients => [...prevIngredients, newIngredient])
@@ -30,15 +26,11 @@ export default function Main(){
                     name="ingredient"  />
                 <button>+ Add Ingredient</button>
             </form>
-            {ingredients.length > 0 && <section>
-                <h2>Ingredients on hand:</h2>
-                <ul className="ingredients-list" aria-live="polite">{ingredientsListItems}</ul>
-                {ingredients.length > 3 && 
-                <IngredientsList
-                    toggleRecipeShow= {toggleRecipeShow}
-                />
-                }
-            </section>}
+            {ingredients.length > 0 && 
+            <IngredientsList 
+                ingredients= {ingredients}
+                toggleRecipeShow= {toggleRecipeShow}
+            />}
             {recipeShow && 
             <ClaudeRecipe 
                 toggle= {recipeShow}
