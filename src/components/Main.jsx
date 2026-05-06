@@ -7,6 +7,17 @@ export default function Main(){
 
     const [ingredients, setIngredients] = React.useState([])
     const [recipeInfo, setRecipeInfo] = React.useState("")
+    const recipeSection = React.useRef(null)
+
+    React.useEffect(() => {
+        if(recipeInfo !== "" && recipeSection.current.scrollIntoView()){
+            const yCoord = recipeSection.current.getBoundingClientRect().top
+            window.scroll({
+                top: yCoord,
+                behaviour: "Smooth"
+            })
+        }
+    }, [recipeInfo])
 
     function addIngredients(formData){
         const newIngredient = formData.get("ingredient")
@@ -30,6 +41,7 @@ export default function Main(){
             </form>
             {ingredients.length > 0 && 
             <IngredientsList 
+                ref= {recipeSection}
                 ingredients= {ingredients}
                 getRecipe= {getRecipe}
             />}
